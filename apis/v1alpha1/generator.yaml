@@ -1,5 +1,91 @@
 ignore:
   resource_names:
-      - AccessPoint
-      - FileSystem
-      - MountTarget
+    - AccessPoint
+    - MountTarget
+  field_paths:
+    # ClientToken is an idempotency token auto-filled by the AWS SDK
+    # when nil. Not exposed to users.
+    - CreateFileSystemInput.ClientToken
+    - CreateFileSystemOutput.ClientToken
+
+resources:
+  FileSystem:
+    synced:
+      when:
+        - path: Status.Status
+          in:
+            - available
+    exceptions:
+      errors:
+        404:
+          code: ResourceNotFoundException
+      terminal_codes:
+        - ValidationException
+    update_operation:
+      custom_method_name: customUpdateFileSystem
+    print:
+      order_by: index
+      additional_columns:
+        - name: FILESYSTEMID
+          json_path: .status.fileSystemID
+          type: string
+          index: 0
+        - name: STATUS
+          json_path: .status.status
+          type: string
+          index: 1
+    fields:
+      # AcceptBucketWarning is create-only and not returned by GetFileSystem.
+      # compare.is_ignored prevents false diffs on reconciliation.
+      AcceptBucketWarning:
+        compare:
+          is_ignored: true
+      # --- Cross-resource references ---
+      Bucket:
+        references:
+          resource: Bucket
+          service_name: s3
+          path: Status.ACKResourceMetadata.ARN
+      KMSKeyID:
+        references:
+          resource: Key
+          service_name: kms
+          path: Status.ACKResourceMetadata.ARN
+      RoleARN:
+        references:
+          resource: Role
+          service_name: iam
+          path: Status.ACKResourceMetadata.ARN
+      # --- Custom spec fields ---
+      # Policy is the FileSystemPolicy JSON document, managed via
+      # Put/Get/DeleteFileSystemPolicy sub-resource APIs. The from config
+      # pulls the field description from the PutFileSystemPolicy API shape
+      # into the CRD for kubectl explain documentation.
+      Policy:
+        from:
+          operation: PutFileSystemPolicy
+          path: Policy
+        is_iam_policy: true
+      # ImportDataRules and ExpirationDataRules are sourced from the
+      # PutSynchronizationConfiguration operation.
+      ImportDataRules:
+        from:
+          operation: PutSynchronizationConfiguration
+          path: ImportDataRules
+        compare:
+          is_ignored: true
+      ExpirationDataRules:
+        from:
+          operation: PutSynchronizationConfiguration
+          path: ExpirationDataRules
+        compare:
+          is_ignored: true
+      # --- Custom status fields ---
+      LatestVersionNumber:
+        from:
+          operation: GetSynchronizationConfiguration
+          path: LatestVersionNumber
+        is_read_only: true
+    hooks:
+      sdk_read_one_post_set_output:
+        template_path: hooks/file_system/sdk_read_one_post_set_output.go.tpl
