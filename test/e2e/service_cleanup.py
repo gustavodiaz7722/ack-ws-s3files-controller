@@ -15,15 +15,52 @@
 """
 
 import logging
+import boto3
 
 from acktest.bootstrapping import Resources
 
 from e2e import bootstrap_directory
+from e2e.bootstrap_resources import BootstrapResources
+
+
+def _delete_file_system(file_system_id: str):
+    """Delete the bootstrapped S3 Files FileSystem."""
+    if not file_system_id:
+        return
+    try:
+        s3files = boto3.client("s3files")
+        s3files.delete_file_system(fileSystemId=file_system_id)
+        logging.info(f"Deleted S3 Files FileSystem {file_system_id}")
+    except Exception as e:
+        logging.error(f"Failed to delete FileSystem {file_system_id}: {e}")
+
+
+def _delete_security_group(sg_id: str):
+    """Delete a security group by ID."""
+    if not sg_id:
+        return
+    try:
+        ec2 = boto3.client("ec2")
+        ec2.delete_security_group(GroupId=sg_id)
+        logging.info(f"Deleted security group {sg_id}")
+    except Exception as e:
+        logging.error(f"Failed to delete security group {sg_id}: {e}")
+
 
 def service_cleanup():
     logging.getLogger().setLevel(logging.INFO)
 
-    resources = Resources.deserialize(bootstrap_directory)
+    resources = BootstrapResources.deserialize(bootstrap_directory)
+
+    # Clean up MountTarget bootstrap resources in correct order:
+    # 1. FileSystem first (before VPC/SGs)
+    # 2. Security groups (before VPC)
+    # 3. VPC/subnet cleanup is handled automatically by the VPC helper
+    _delete_file_system(resources.MountTargetFileSystemID)
+    _delete_security_group(resources.MountTargetSecurityGroup1ID)
+    _delete_security_group(resources.MountTargetSecurityGroup2ID)
+
+    # Clean up all acktest-managed resources (Bucket, Role, VPC)
     resources.cleanup()
 
 if __name__ == "__main__":

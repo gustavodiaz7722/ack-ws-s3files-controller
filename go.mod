@@ -3,6 +3,7 @@ module github.com/aws-controllers-k8s/s3files-controller
 go 1.25.7
 
 require (
+	github.com/aws-controllers-k8s/ec2-controller v1.11.1
 	github.com/aws-controllers-k8s/iam-controller v1.6.3
 	github.com/aws-controllers-k8s/kms-controller v1.2.3
 	github.com/aws-controllers-k8s/runtime v0.58.1

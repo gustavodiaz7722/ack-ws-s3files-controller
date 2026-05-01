@@ -17,6 +17,7 @@ rules:
   - s3files.services.k8s.aws
   resources:
   - filesystems
+  - mounttargets
   verbs:
   - create
   - delete
@@ -29,6 +30,7 @@ rules:
   - s3files.services.k8s.aws
   resources:
   - filesystems
+  - mounttargets
   verbs:
   - get
   - patch

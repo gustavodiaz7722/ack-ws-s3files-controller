@@ -1,0 +1,7 @@
+apiVersion: s3files.services.k8s.aws/v1alpha1
+kind: MountTarget
+metadata:
+  name: $MOUNT_TARGET_NAME
+spec:
+  fileSystemID: $FILE_SYSTEM_ID
+  subnetID: $SUBNET_ID

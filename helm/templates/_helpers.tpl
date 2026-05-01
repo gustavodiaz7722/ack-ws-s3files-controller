@@ -70,6 +70,16 @@ rules:
   - list
   - watch
 - apiGroups:
+  - ec2.services.k8s.aws
+  resources:
+  - securitygroups
+  - securitygroups/status
+  - subnets
+  - subnets/status
+  verbs:
+  - get
+  - list
+- apiGroups:
   - iam.services.k8s.aws
   resources:
   - roles
@@ -97,6 +107,7 @@ rules:
   - s3files.services.k8s.aws
   resources:
   - filesystems
+  - mounttargets
   verbs:
   - create
   - delete
@@ -109,6 +120,7 @@ rules:
   - s3files.services.k8s.aws
   resources:
   - filesystems/status
+  - mounttargets/status
   verbs:
   - get
   - patch

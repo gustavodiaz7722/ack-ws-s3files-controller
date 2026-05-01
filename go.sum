@@ -1,5 +1,7 @@
 github.com/Masterminds/semver/v3 v3.4.0 h1:Zog+i5UMtVoCU8oKka5P7i9q9HgrJeGzI9SA1Xbatp0=
 github.com/Masterminds/semver/v3 v3.4.0/go.mod h1:4V+yj/TJE1HU9XfppCwVMZq3I84lprf4nC11bSS5beM=
+github.com/aws-controllers-k8s/ec2-controller v1.11.1 h1:abQKRDcs4JCbv9u7DAxsZf3dmpRPikY/MvamfdMxdDI=
+github.com/aws-controllers-k8s/ec2-controller v1.11.1/go.mod h1:ns/Bo96xyeONsK9B7rku9IiUUVGNTCcl80lj8xd20as=
 github.com/aws-controllers-k8s/iam-controller v1.6.3 h1:pmbbmuqzHMJKUIkYNDwH3xPcDK3hG4cJVzsv7k7+qd8=
 github.com/aws-controllers-k8s/iam-controller v1.6.3/go.mod h1:4YdmWzfmXrlquVpnv48z+dADaDOh35IevLbLCSAngeQ=
 github.com/aws-controllers-k8s/kms-controller v1.2.3 h1:OIY0e8veZP/xloDVpk4i9M5Q5JvrsqZjoS/8O6CBblo=

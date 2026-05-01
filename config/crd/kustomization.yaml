@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - common
   - bases/s3files.services.k8s.aws_filesystems.yaml
+  - bases/s3files.services.k8s.aws_mounttargets.yaml

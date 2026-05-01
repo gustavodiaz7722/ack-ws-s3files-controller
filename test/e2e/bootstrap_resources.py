@@ -19,12 +19,17 @@ from dataclasses import dataclass
 from acktest.bootstrapping import Resources
 from acktest.bootstrapping.s3 import Bucket
 from acktest.bootstrapping.iam import Role
+from acktest.bootstrapping.vpc import VPC
 from e2e import bootstrap_directory
 
 @dataclass
 class BootstrapResources(Resources):
     FileSystemBucket: Bucket
     FileSystemRole: Role
+    MountTargetVPC: VPC
+    MountTargetSecurityGroup1ID: str = None
+    MountTargetSecurityGroup2ID: str = None
+    MountTargetFileSystemID: str = None
 
 _bootstrap_resources = None
 

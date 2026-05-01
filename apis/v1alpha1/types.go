@@ -45,10 +45,11 @@ type ImportDataRule struct {
 // Contains information about an S3 File System Access Point returned in list
 // operations.
 type ListAccessPointsDescription struct {
-	FileSystemID *string `json:"fileSystemID,omitempty"`
-	Name         *string `json:"name,omitempty"`
-	OwnerID      *string `json:"ownerID,omitempty"`
-	Status       *string `json:"status,omitempty"`
+	AccessPointID *string `json:"accessPointID,omitempty"`
+	FileSystemID  *string `json:"fileSystemID,omitempty"`
+	Name          *string `json:"name,omitempty"`
+	OwnerID       *string `json:"ownerID,omitempty"`
+	Status        *string `json:"status,omitempty"`
 }
 
 // Contains information about an S3 File System returned in list operations.
@@ -66,10 +67,17 @@ type ListFileSystemsDescription struct {
 
 // Contains information about a mount target returned in list operations.
 type ListMountTargetsDescription struct {
-	FileSystemID  *string `json:"fileSystemID,omitempty"`
-	OwnerID       *string `json:"ownerID,omitempty"`
-	Status        *string `json:"status,omitempty"`
-	StatusMessage *string `json:"statusMessage,omitempty"`
+	AvailabilityZoneID *string `json:"availabilityZoneID,omitempty"`
+	FileSystemID       *string `json:"fileSystemID,omitempty"`
+	IPv4Address        *string `json:"ipv4Address,omitempty"`
+	IPv6Address        *string `json:"ipv6Address,omitempty"`
+	MountTargetID      *string `json:"mountTargetID,omitempty"`
+	NetworkInterfaceID *string `json:"networkInterfaceID,omitempty"`
+	OwnerID            *string `json:"ownerID,omitempty"`
+	Status             *string `json:"status,omitempty"`
+	StatusMessage      *string `json:"statusMessage,omitempty"`
+	SubnetID           *string `json:"subnetID,omitempty"`
+	VPCID              *string `json:"vpcID,omitempty"`
 }
 
 // A key-value pair for resource tagging.
