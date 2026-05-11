@@ -56,7 +56,7 @@ def service_cleanup():
     # 1. FileSystem first (before VPC/SGs)
     # 2. Security groups (before VPC)
     # 3. VPC/subnet cleanup is handled automatically by the VPC helper
-    _delete_file_system(resources.MountTargetFileSystemID)
+    _delete_file_system(resources.SharedFileSystemID)
     _delete_security_group(resources.MountTargetSecurityGroup1ID)
     _delete_security_group(resources.MountTargetSecurityGroup2ID)
 

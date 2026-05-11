@@ -1,0 +1,6 @@
+apiVersion: s3files.services.k8s.aws/v1alpha1
+kind: AccessPoint
+metadata:
+  name: $ACCESS_POINT_NAME
+spec:
+  fileSystemID: $FILE_SYSTEM_ID

@@ -29,7 +29,7 @@ class BootstrapResources(Resources):
     MountTargetVPC: VPC
     MountTargetSecurityGroup1ID: str = None
     MountTargetSecurityGroup2ID: str = None
-    MountTargetFileSystemID: str = None
+    SharedFileSystemID: str = None
 
 _bootstrap_resources = None
 

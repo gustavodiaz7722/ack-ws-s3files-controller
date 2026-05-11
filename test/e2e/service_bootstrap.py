@@ -65,7 +65,7 @@ def _create_security_group(ec2_client, vpc_id: str, name: str) -> str:
     return sg_id
 
 
-def _create_mount_target_file_system(bucket_arn: str, role_arn: str) -> str:
+def _create_shared_file_system(bucket_arn: str, role_arn: str) -> str:
     """Create an S3 Files FileSystem and return its ID."""
     s3files = boto3.client("s3files")
     resp = s3files.create_file_system(
@@ -137,9 +137,9 @@ def service_bootstrap() -> Resources:
     bucket_arn = _get_bucket_arn(resources.FileSystemBucket.name)
     role_arn = resources.FileSystemRole.arn
 
-    fs_id = _create_mount_target_file_system(bucket_arn, role_arn)
+    fs_id = _create_shared_file_system(bucket_arn, role_arn)
     _wait_for_file_system_available(fs_id)
-    resources.MountTargetFileSystemID = fs_id
+    resources.SharedFileSystemID = fs_id
 
     return resources
 

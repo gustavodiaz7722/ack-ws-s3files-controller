@@ -17,7 +17,7 @@ S3Files-specific test variables.
 from e2e.bootstrap_resources import get_bootstrap_resources
 
 REPLACEMENT_VALUES = {
-    "FILE_SYSTEM_ID": get_bootstrap_resources().MountTargetFileSystemID,
+    "FILE_SYSTEM_ID": get_bootstrap_resources().SharedFileSystemID,
     "SUBNET_ID": get_bootstrap_resources().MountTargetVPC.public_subnets.subnet_ids[0],
     "SUBNET_ID_2": get_bootstrap_resources().MountTargetVPC.public_subnets.subnet_ids[1],
     "SUBNET_ID_3": get_bootstrap_resources().MountTargetVPC.public_subnets.subnet_ids[2],

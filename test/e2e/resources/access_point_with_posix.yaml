@@ -1,0 +1,18 @@
+apiVersion: s3files.services.k8s.aws/v1alpha1
+kind: AccessPoint
+metadata:
+  name: $ACCESS_POINT_NAME
+spec:
+  fileSystemID: $FILE_SYSTEM_ID
+  posixUser:
+    uid: 1000
+    gid: 100
+    secondaryGIDs:
+      - 200
+      - 300
+  rootDirectory:
+    path: /tenant-a
+    creationPermissions:
+      ownerUID: 1000
+      ownerGID: 100
+      permissions: "0755"

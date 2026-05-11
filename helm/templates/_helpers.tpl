@@ -106,6 +106,7 @@ rules:
 - apiGroups:
   - s3files.services.k8s.aws
   resources:
+  - accesspoints
   - filesystems
   - mounttargets
   verbs:
@@ -119,6 +120,7 @@ rules:
 - apiGroups:
   - s3files.services.k8s.aws
   resources:
+  - accesspoints/status
   - filesystems/status
   - mounttargets/status
   verbs:

@@ -28,6 +28,14 @@ var (
 	_ = ackv1alpha1.AWSAccountID("")
 )
 
+// Specifies the permissions to set on newly created directories within the
+// file system.
+type CreationPermissions struct {
+	OwnerGID    *int64  `json:"ownerGID,omitempty"`
+	OwnerUID    *int64  `json:"ownerUID,omitempty"`
+	Permissions *string `json:"permissions,omitempty"`
+}
+
 // Specifies a rule that controls when cached data expires from the file system
 // based on last access time.
 type ExpirationDataRule struct {
@@ -45,11 +53,18 @@ type ImportDataRule struct {
 // Contains information about an S3 File System Access Point returned in list
 // operations.
 type ListAccessPointsDescription struct {
-	AccessPointID *string `json:"accessPointID,omitempty"`
-	FileSystemID  *string `json:"fileSystemID,omitempty"`
-	Name          *string `json:"name,omitempty"`
-	OwnerID       *string `json:"ownerID,omitempty"`
-	Status        *string `json:"status,omitempty"`
+	AccessPointARN *string `json:"accessPointARN,omitempty"`
+	AccessPointID  *string `json:"accessPointID,omitempty"`
+	FileSystemID   *string `json:"fileSystemID,omitempty"`
+	Name           *string `json:"name,omitempty"`
+	OwnerID        *string `json:"ownerID,omitempty"`
+	// Specifies the POSIX identity with uid, gid, and secondary group IDs for user
+	// enforcement.
+	PosixUser *PosixUser `json:"posixUser,omitempty"`
+	// Specifies the root directory path and optional creation permissions for newly
+	// created directories.
+	RootDirectory *RootDirectory `json:"rootDirectory,omitempty"`
+	Status        *string        `json:"status,omitempty"`
 }
 
 // Contains information about an S3 File System returned in list operations.
@@ -78,6 +93,23 @@ type ListMountTargetsDescription struct {
 	StatusMessage      *string `json:"statusMessage,omitempty"`
 	SubnetID           *string `json:"subnetID,omitempty"`
 	VPCID              *string `json:"vpcID,omitempty"`
+}
+
+// Specifies the POSIX identity with uid, gid, and secondary group IDs for user
+// enforcement.
+type PosixUser struct {
+	GID           *int64   `json:"gid,omitempty"`
+	SecondaryGIDs []*int64 `json:"secondaryGIDs,omitempty"`
+	UID           *int64   `json:"uid,omitempty"`
+}
+
+// Specifies the root directory path and optional creation permissions for newly
+// created directories.
+type RootDirectory struct {
+	// Specifies the permissions to set on newly created directories within the
+	// file system.
+	CreationPermissions *CreationPermissions `json:"creationPermissions,omitempty"`
+	Path                *string              `json:"path,omitempty"`
 }
 
 // A key-value pair for resource tagging.
