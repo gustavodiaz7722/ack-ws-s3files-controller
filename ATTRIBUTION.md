@@ -2179,7 +2179,9 @@ Subdependencies:
 * `sigs.k8s.io/structured-merge-diff/v6`
 * `sigs.k8s.io/yaml`
 
+#### github.com/aws-controllers-k8s/runtime
 
+License Identifier: Apache-2.0
 
 
 
